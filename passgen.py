@@ -1,9 +1,11 @@
 import string
 import random
+import argparse
+import os 
 MIN_RANGE = 16
 MAX_RANGE = 26
-
-def generate():
+PATH = os.environ['USERPROFILE'] + '\\Documents\\Passgen.txt'
+def generate(acc_name , pathto):
 	words = [word for word in string.ascii_letters]
 	punctuations = [punc for punc in string.punctuation] 
 	digits = [dig for dig in string.digits]
@@ -15,8 +17,13 @@ def generate():
 
 	print(password)
 
-	
+	with open(pathto , 'a+') as file :
+		file.write(acc_name +':'+ password + '\n')
 
 
 if __name__ == '__main__':
-	generate()
+	parser = argparse.ArgumentParser(description="Password Generator")
+	parser.add_argument('-p' , '--path' , default = PATH ,  type=str , help="Path For Saving Passwords")
+	parser.add_argument('-A' , '--account' , type=str , help="Account Name For Generated Password" , required=True)
+	args = parser.parse_args()
+	generate(acc_name=args.account , pathto = args.path)
