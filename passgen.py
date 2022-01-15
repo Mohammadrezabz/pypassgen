@@ -4,7 +4,10 @@ import argparse
 import os 
 MIN_RANGE = 16
 MAX_RANGE = 26
-PATH = os.environ['USERPROFILE'] + '\\Documents\\Passgen.txt'
+if os.name == "nt":
+	PATH = os.environ['USERPROFILE'] + '\\Documents\\Passgen.txt'
+else:
+	PATH = os.path.expanduser('~') + '/Documents/passgen.txt'
 def generate(acc_name , pathto):
 	words = [word for word in string.ascii_letters]
 	punctuations = [punc for punc in string.punctuation] 
